@@ -40,11 +40,8 @@ function cartpole(u, p, t)
         (force + p.m * p.L * sin(θ) * θ′^2 + p.m * p.g * cos(θ) * sin(θ)) /
         (p.M + p.m - p.m * cos(θ)^2),
         θ′,
-        (
-            force * cos(θ) -
-            (p.M + p.m) * p.g * sin(θ) +
-            p.m * p.L * cos(θ) * sin(θ) * x′^2
-        ) / (p.m * p.L * cos(θ)^2 - (p.M + p.m) * p.L),
+        (force * cos(θ) - (p.M + p.m) * p.g * sin(θ) + p.m * p.L * cos(θ) * sin(θ) * x′^2) /
+        (p.m * p.L * cos(θ)^2 - (p.M + p.m) * p.L),
     )
 end
 
@@ -54,7 +51,7 @@ end
 Return the default parameter values for the cart-pole example.
 """
 function cartpole_defaults()
-    return (M = 5, m = 1, L = 2, g = 10, f = (u, p, t) -> false)
+    return (M=5, m=1, L=2, g=10, f=(u, p, t) -> false)
 end
 
 function cartpole_integrate(u0, p, tend)
@@ -71,7 +68,7 @@ Calculate the optimal control gains (LQR) around a specific operating point.
 """
 function cartpole_optimal_control(u, p, Q, R)
     A = jacobian(uu -> cartpole(uu, p, false), u)
-    B = jacobian(pp -> cartpole(u, merge(p, (f = (args...) -> only(pp),)), false), [0.0])  # this is slightly cumbersome since I've made f as a function
+    B = jacobian(pp -> cartpole(u, merge(p, (f=(args...) -> only(pp),)), false), [0.0])  # this is slightly cumbersome since I've made f as a function
     # Solve the Riccati equation
     P, _ = arec(A, B, R, Q)  # returns a tuple; the first element is the one of interest
     # Calculate optimal gains
@@ -85,14 +82,14 @@ end
 Calculate the solution of the cart-pole example with optimal (LQR) control. Plotting is
 optional, use `cartpole_example(plotting=true)` to display.
 """
-function cartpole_example(; plotting = false)
+function cartpole_example(; plotting=false)
     u0 = [0, 0, 0.1, 0]
     p0 = cartpole_defaults()
     tend = 10.0
     R = Matrix(I, 1, 1)
     Q = diagm([500.0, 250, 1, 1])
     K = cartpole_optimal_control(u0, p0, Q, R)  # calculate control gains
-    p = merge(p0, (f = (u, p, t) -> only(-p.K * u), K = K))  # add a linear controller
+    p = merge(p0, (f=(u, p, t) -> only(-p.K * u), K=K))  # add a linear controller
     prob = ODEProblem(cartpole, SVector{4}(u0), (0.0, tend), p)
     sol = solve(prob, Tsit5())
     plotting && display(plot(sol))
