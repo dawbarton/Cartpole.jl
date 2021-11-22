@@ -1,5 +1,9 @@
 module Cartpole
 
+# The convention for packages is to explicitly import all required functions; for a quick
+# project this isn't necessary and we can just do `using OrdinaryDiffEq` and pull in
+# everything
+
 using OrdinaryDiffEq: ODEProblem, solve, Tsit5  # ODE integrator
 using StaticArrays: SVector  # Fast statically-sized arrays
 using MatrixEquations: arec  # Solve a Riccati equation
