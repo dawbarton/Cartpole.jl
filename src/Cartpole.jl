@@ -1,6 +1,6 @@
 module Cartpole
 
-using OrdinaryDiffEq: solve, Tsit5  # ODE integrator
+using OrdinaryDiffEq: ODEProblem, solve, Tsit5  # ODE integrator
 using StaticArrays: SVector  # Fast statically-sized arrays
 using MatrixEquations: arec  # Solve a Riccati equation
 using Plots: plot  # Basic plotting
