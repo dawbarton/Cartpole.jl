@@ -48,6 +48,11 @@ function cartpole(u, p, t)
     )
 end
 
+"""
+    cartpole_defaults()
+
+Return the default parameter values for the cart-pole example.
+"""
 function cartpole_defaults()
     return (M = 5, m = 1, L = 2, g = 10, f = (u, p, t) -> false)
 end
