@@ -1,0 +1,13 @@
+name = "cart_pole_example"
+uuid = "b6823e3d-5162-4fdc-95c1-163336bf7d7a"
+authors = ["David AW Barton"]
+version = "0.1.0"
+
+[compat]
+julia = "1.6"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
