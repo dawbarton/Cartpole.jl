@@ -5,7 +5,7 @@ using StaticArrays: SVector  # Fast statically-sized arrays
 using MatrixEquations: arec  # Solve a Riccati equation
 using Plots: plot  # Basic plotting
 using ForwardDiff: jacobian  # Automatic differentiation
-using LinearAlgebra: diagm  # Basic linear algebra
+using LinearAlgebra: diagm, I  # Basic linear algebra
 
 export cartpole, cartpole_defaults, cartpole_example
 
